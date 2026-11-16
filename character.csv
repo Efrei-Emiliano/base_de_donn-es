@@ -1,0 +1,10 @@
+_id,Character,ATK,DEF,PV
+69d609309f2fd5ddba8560dd,Mage,22,8,80
+69d609309f2fd5ddba8560de,Archer,20,10,90
+69d609309f2fd5ddba8560df,Voleur,24,11,85
+69d609309f2fd5ddba8560e0,Paladin,16,15,110
+69d609309f2fd5ddba8560e1,Sorcier,27,6,70
+69d609309f2fd5ddba8560e2,Chevalier,15,18,120
+69d609309f2fd5ddba8560e3,Moine,21,12,95
+69d609309f2fd5ddba8560e4,Berserker,25,9,105
+69d609309f2fd5ddba8560e5,Chasseur,19,14,100
