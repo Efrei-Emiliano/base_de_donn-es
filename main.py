@@ -1,84 +1,41 @@
+from pymongo.errors import PyMongoError
+from utils import afficher_menu
+from models import ennemi, NB_PERSONNAGES
+from game import personnage, jouer, afficher_meilleurs_scores
 
 
-#tant que infini:
-    #Afficher le menu ( 1- jouer, 2- stats, 3- quitter)
-    #pour chaque option dans enumerate(options, start =1)
-        #afficher {i}. option
-    #Choix = demander un choix a l'utilisateur
-    #Choix valide()
-    #Si choix  retourner choix valide:
-    #afficher message d'erreur
+#Charge les personnages et les ennemis depuis MongoDB
+def load_data():
+
+    try:
+        personnages = personnage()
+        ennemis = ennemi()
+    except (PyMongoError, KeyError) as erreur:
+        print("Impossible de charger les données depuis MongoDB :", erreur)
+        return None
+    #Vérifie qu'il y a assez de données pour jouer
+    if len(personnages) < NB_PERSONNAGES or len(ennemis) == 0:
+        print(f"Données insuffisantes dans MongoDB (il faut au moins {NB_PERSONNAGES} personnages et 1 ennemi).")
+        return None
+    return personnages, ennemis
+
+
+#Charge les données puis affiche le menu principal en boucle jusqu'à "Quitter".
+def main():
     
-    #sinon
-    #sortir de la boucle
-    #ouvrir choix
+    donnees = load_data()
+    if donnees is None:
+        return
+    personnages, ennemis = donnees
+    #Boucle du menu
+    while True:
+        choix = afficher_menu()
+        if choix == "1":
+            jouer(personnages, ennemis)
+        elif choix == "2":
+            afficher_meilleurs_scores()
+        else:
+            print("Au revoir !")
+            break
 
-
-#Choix valide:
-    #Si choix n'est pas Isdigit():
-        #Renvoyer False
-    #Convertir en nombre entier
-    #Si choix < min ou choix > max
-        #Renvoyer false
-    #Sinon
-        #Renvoyer True
-
-#Jouer:
-    #Tant que infini:
-        #Création d'équipe()
-        #Combat()
-
-#Création d'équipe:
-    #demander un pseudo au joueur
-    #Affiche liste personnages numéroté
-    #tant que infini:
-        #demande 1 personnages a l'utilisateur
-        #Choix valide()
-        #Si choix invalide:
-            #afficher message d'erreur
-            #redemmander
-        #Si choix déja dans équipe:
-            #afficher message d'erreur
-            #redemmander
-        #Si 3 personnages dans équipe:
-            #Sortir de la boucle 
-    #afficher équipe
-
-
-#Combat:
-    #Lancer vague()
-    #Attaque Joueurs()
-    #Attaque Ennemi()
-
-
-#Lancer vague:
-    #Afficher "début de vague n°"
-    #Choisir ennemi aléatoire
-    #Afficher "Un ennemi apparait"
-
-
-#Attaque Joueurs:
-    #réduire pv ennemi de l'atk de l'équipe (1 fois par personnage)
-    #Afficher dégats
-    #si pv ennemi <= 0:
-        #Afficher "ennemi vaincu"
-    #sinon:
-        #Afficher pv ennemi
-
-
-#Attaque ennemi:
-    #réduire pv personnage aléatoire
-    #Afficher dégats
-    #Si pv personnage <= 0
-        #Afficher "[nom personnage] mort"
-    #placer personnage dans liste morts
-
-
-#Stats
-    #Ouvrir mongo DB
-    #Afficher les 5 meilleurs scores
-    #Afficher le menu ( 1- jouer, 2- stats, 3- quitter)
-
-
-#Quitter
-    #Ferme le programme
+main()
