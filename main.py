@@ -4,22 +4,6 @@ from models import ennemi, NB_PERSONNAGES
 from game import personnage, jouer, afficher_meilleurs_scores
 
 
-#Charge les personnages et les ennemis depuis MongoDB
-def load_data():
-
-    try:
-        personnages = personnage()
-        ennemis = ennemi()
-    except (PyMongoError, KeyError) as erreur:
-        print("Impossible de charger les données depuis MongoDB :", erreur)
-        return None
-    #Vérifie qu'il y a assez de données pour jouer
-    if len(personnages) < NB_PERSONNAGES or len(ennemis) == 0:
-        print(f"Données insuffisantes dans MongoDB (il faut au moins {NB_PERSONNAGES} personnages et 1 ennemi).")
-        return None
-    return personnages, ennemis
-
-
 #Charge les données puis affiche le menu principal en boucle jusqu'à "Quitter".
 def main():
     
@@ -37,5 +21,22 @@ def main():
         else:
             print("Au revoir !")
             break
+
+
+#Charge les personnages et les ennemis depuis MongoDB
+def load_data():
+
+    try:
+        personnages = personnage()
+        ennemis = ennemi()
+    except (PyMongoError, KeyError) as erreur:
+        print("Impossible de charger les données depuis MongoDB :", erreur)
+        return None
+    #Vérifie qu'il y a assez de données pour jouer
+    if len(personnages) < NB_PERSONNAGES or len(ennemis) == 0:
+        print(f"Données insuffisantes dans MongoDB (il faut au moins {NB_PERSONNAGES} personnages et 1 ennemi).")
+        return None
+    return personnages, ennemis
+
 
 main()
