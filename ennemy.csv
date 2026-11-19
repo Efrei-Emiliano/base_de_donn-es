@@ -1,0 +1,14 @@
+﻿ennemi,ATK,DEF,PV
+Gobelin,10,5,50
+Orc,20,8,100
+Troll,17,10,120
+Blob,5,3,10
+Squelette,15,7,40
+Zombie,7,7,60
+Kobold,4,3,30
+Loup-garou,13,13,130
+Vampire,20,12,150
+Spectre,18,10,100
+Gnoll,14,7,75
+Harpie,16,5,75
+Minotaure,25,12,120
